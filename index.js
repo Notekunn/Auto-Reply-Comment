@@ -1,5 +1,6 @@
-request = require('request-promise');
-var logIDs = new Array();
+const request = require('request-promise').defaults({json:true});
+const fs = require('fs');
+let logFile = './log.json';
 let delay = 800;
 var recentStatus;
 const ACCESS_TOKEN = 'EAACW5Fg5N2IBALWZBOpP0goyXQUuuVZB8y9oJcmeUb27UmfHkhTVu9sok4gRlHS2qJseK60FZA2RmvSvPr84QcYRvdmKimYrZAZB0ysfgdBlDkL3ZBm9E8MYoOWJKohHRl3xd7o0MIi1pfAdkZAAd7LgvavkAhWEG1WqAXErFObQ3vMFZBRAJMtpT94v9FHTMwQZD'
@@ -14,10 +15,9 @@ var cronjob = setInterval(() => {
         json: true
     })
         .then(result => {
+            let logData = require(logFile);
             if (result.error_code || result.error_msg) return console.log('Lỗi cmnr! ', result.error_msg) && clearInterval(cronjob) && process.exit(1)
             //console.log(result);
-
-
             let i = 0
             let ObjectID = result[0] && result[0].object_id;
             if (recentStatus != ObjectID) {
@@ -30,8 +30,8 @@ var cronjob = setInterval(() => {
                 let idCmt = result[j].id;
                 let idUserCmt = result[j].fromid;
                 let contentComment = result[j].text;
-                if (logIDs.includes(idCmt)) break;
-                logIDs.push(idCmt)
+                if (logData.includes(idCmt)) break;
+                logData.push(idCmt)
                 if (!contentComment) continue;
                 getsimi(contentComment)
                     .then(replysimsimi =>
@@ -45,7 +45,7 @@ var cronjob = setInterval(() => {
                             }
                         })
                     ).then(
-                        a => console.log(a)
+                        a => console.log('[UwU]::',a.id)
                     )
                     .catch(error => {
                         console.log('' + error)
@@ -54,9 +54,11 @@ var cronjob = setInterval(() => {
 
                 i++;
             }
-
+           fs.writeFileSync(logFile, JSON.stringify(logData))
         })
         .catch(e => console.log('Lỗi ' + e))
+
+
 }, delay)
 function getsimi(text) {
 
