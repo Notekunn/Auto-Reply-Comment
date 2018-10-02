@@ -1,7 +1,8 @@
 request = require('request-promise');
 var logIDs = new Array();
+let delay = 800;
 var recentStatus;
-const ACCESS_TOKEN = 'EAAAAUaZA8jlABACqu8s2LZADQQ5BCREfS2AVGDosRIN3xr8cj9majQTxTXGgMh2OtO9K0gFASvEczBxdEiZAplPvvnRc4JtQOZAVFHoKPQLQlayB3ikzzKQHfDsTVjhavW4d80xPJtWHI3eVejTiIEZAZBzdpBKVIJZAaZBUknsJJDfGu2wq9hTS'
+const ACCESS_TOKEN = 'EAACW5Fg5N2IBALWZBOpP0goyXQUuuVZB8y9oJcmeUb27UmfHkhTVu9sok4gRlHS2qJseK60FZA2RmvSvPr84QcYRvdmKimYrZAZB0ysfgdBlDkL3ZBm9E8MYoOWJKohHRl3xd7o0MIi1pfAdkZAAd7LgvavkAhWEG1WqAXErFObQ3vMFZBRAJMtpT94v9FHTMwQZD'
 var cronjob = setInterval(() => {
     request({
         url: 'https://api.facebook.com/method/fql.query',
@@ -56,7 +57,7 @@ var cronjob = setInterval(() => {
 
         })
         .catch(e => console.log('Lỗi ' + e))
-}, 2000)
+}, delay)
 function getsimi(text) {
 
     return request({
