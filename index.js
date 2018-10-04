@@ -1,7 +1,7 @@
 const request = require('request-promise').defaults({json:true});
 const fs = require('fs');
 let logFile = './log.json';
-let delay = 800;
+let delay = 1000;
 var recentStatus;
 const ACCESS_TOKEN = 'EAACW5Fg5N2IBALWZBOpP0goyXQUuuVZB8y9oJcmeUb27UmfHkhTVu9sok4gRlHS2qJseK60FZA2RmvSvPr84QcYRvdmKimYrZAZB0ysfgdBlDkL3ZBm9E8MYoOWJKohHRl3xd7o0MIi1pfAdkZAAd7LgvavkAhWEG1WqAXErFObQ3vMFZBRAJMtpT94v9FHTMwQZD'
 var cronjob = setInterval(() => {
